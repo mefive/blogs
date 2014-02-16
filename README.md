@@ -36,6 +36,21 @@
      f(); // {} ES3
 
      var f = funtion g(){ … } //开辟两个内存空间存储函数
+
+第17条 间接调用eval函数
+
+     (0, eval)(src); 
+     //相当于
+     var f = eval;
+     f(src);  //src可访问的作用域只有全局
+
+     var v = “global”;
+     function() {
+          var v = “local”;
+          
+          eval("v"); //local
+          (0, src)("v”); //global
+     }
      
 
 
