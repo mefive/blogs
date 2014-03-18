@@ -91,7 +91,7 @@ Javascript所有数字均为64位double型。
                     return downloadSync(url[i]);
                } catch(e) { }
           }
-          throw new Error(“all downloads failed”);
+          throw new Error("all downloads failed");
      }
      
      //异步版本 非阻塞 依次执行
