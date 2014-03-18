@@ -72,7 +72,7 @@ Javascript所有数字均为64位double型。
                },
                next: function(){
                     if(i >= n) {
-                         throw new Error(“end of iteration”);
+                         throw new Error("end of iteration");
                     }
                     return arguments[i++]; //此时的arguments是next的
                }
