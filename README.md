@@ -53,9 +53,9 @@ Javascript所有数字均为64位double型。
      var f = eval;
      f(src);  //src可访问的作用域只有全局
 
-     var v = “global”;
+     var v = "global";
      function() {
-          var v = “local”;
+          var v = "local";
           
           eval("v"); //local
           (0, src)("v”); //global
