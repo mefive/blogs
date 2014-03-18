@@ -58,7 +58,7 @@ Javascript所有数字均为64位double型。
           var v = "local";
           
           eval("v"); //local
-          (0, src)("v”); //global
+          (0, eval)("v"); //global
      }
 第24条 使用变量保存arguments的引用
 
