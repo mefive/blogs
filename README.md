@@ -84,15 +84,6 @@ Javascript所有数字均为64位double型。
 第64条 对异步循环使用递归
      保证执行次序 顺序执行 限制条件是只能调用相同的处理函数
 
-     //同步的版本 阻塞依次执行downloadSync
-     function downloadOneSync(urls) {
-          for(var i = 0, n < urls.length; i < n; i++) {
-               try {
-                    return downloadSync(urls[i]);
-               } catch(e) { }
-          }
-          throw new Error("all downloads failed");
-     }
      
      //异步版本 非阻塞 依次执行
      function downloadOneAsync(urls, onsuccess, onfailure) {
@@ -102,7 +93,7 @@ Javascript所有数字均为64位double型。
                if(i >= n) {
                     return;
                }
-               downloadAsync(urls[i]. onsuccess, function(){
+               downloadAsync(urls[i], function(){
                     tryNextURL(i + 1);
                });
           };
