@@ -55,10 +55,12 @@ Javascript所有数字均为64位double型。
 
      var v = "global";
      function() {
-          var v = "local";
-          
+          var v = "local",
+              s = "s";
+              
           eval("v"); //local
           (0, eval)("v"); //global
+          (0, eval)("s"); //s
      }
 第24条 使用变量保存arguments的引用
 
