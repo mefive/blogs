@@ -88,7 +88,7 @@ Javascript所有数字均为64位double型。
      function downloadOneSync(urls) {
           for(var i = 0, n < urls.length; i < n; i++) {
                try {
-                    return downloadSync(url[i]);
+                    return downloadSync(urls[i]);
                } catch(e) { }
           }
           throw new Error("all downloads failed");
