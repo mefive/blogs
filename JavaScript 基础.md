@@ -292,7 +292,7 @@ es5 规定字面量与构造函数每次都返回新实例，但 ie8- 的字面�
 
 
 
-#Global对象
+#Global 对象
 
 `encodeURI(string)` 不会对特殊字符编码 `:` `/` `?` `#`，对空格编码
 
@@ -304,3 +304,114 @@ es5 规定字面量与构造函数每次都返回新实例，但 ie8- 的字面�
 
 #Math
 
+`E` `PI`
+
+`.ceil()` 向上舍入。 `.floor()` 向下舍入。`.round()` 四舍五入
+
+`random()` 返回 0 ~ 1 的随机数。`Math.floor(Math.random() * big + small)` 获取介于 small 和 big 之间的数
+
+
+
+#对象
+
+#####属性
+
+对象属性分为 **数据属性** 与 **访问器属性** es5
+
+数据属性描述 `configurable` `enumerable` `writable` 默认都是 `true`，`value`。 
+
+ie9+ 可以通过 `Object.defineProperty()` 设置， 一但设置且不配置，`configurable` `enumerable` `writable` 默认都是 `false`
+
+`configurable` 为 `false` 后，不可再改回 `true`，不可被 `delete`，并且不可通过 `defineProperty` 修改除 `writable` 以外的描述
+
+访问器属性就是通过 `defineProperty` 设置 `set` `get` 函数 严格模式下 若定义了一个 也要定义另外一个
+
+`Object.definedProperties` 定义多个属性
+
+
+
+#####创建对象
+
+######工厂模式
+
+一个函数返回组装好的对象
+
+######构造函数模式
+
+简单的将属性附加到实例上，缺点是实例之前未共享方法属性，或缺乏封装性
+
+######原型模式
+
+把属性都附加到构造函数的原型上
+
+`Object.getPrototypeOf(obj)` 获取对象上的原型对象
+
+`for in` 会遍历出原型链上线的属性，需要用 `hasOwnProperty()` 过滤掉
+
+es5 中的 `Object.keys(obj)` 返回实例可枚举属性名数组。`Object.getOwnPropertyNames(obj)` 获取实例所有属性数组
+
+原型模式的缺陷是，共享了引用类型的属性
+
+######组合使用构造函数模式和原型模式
+
+构造函数用于实例属性赋值，尤其是引用类型的属性，原型负责函数类型和基本类型
+
+
+
+#继承
+
+#####原型链组合构造函数
+
+    function Sub() {
+
+        Super.call(this, arguments);
+
+        ...
+
+    }
+
+    Sub.prototype = new Super();
+
+#####原型式继承
+
+没有构造函数，利用已有的对象创造新对象
+
+###### 
+
+    var F = function () {};
+
+    F.prototype = super;
+
+    return new F();
+
+等价于 es5 中的 `Object.create()`
+
+#####原型寄生组合构造函数
+
+    function Sub() {
+
+        Super.call(this, arguments);
+
+        ...
+
+    }
+
+    Sub.prototype = Object.create(Super.prototype);
+
+
+
+#函数表达式
+
+`name` 函数名
+
+递归函数一定要是具名函数，或非严格模式下用 `arguments.callee`
+
+#####闭包
+
+函数创建时，保存了当前运行函数的活动对象和作用域链保存到 `[[scope]]` 里
+
+函数执行时，创建**活动对象**和包含外围活动对象的作用域链（从 `[[scope]]` 复制过来）
+
+IE DOM 元素的 GC 是基于引用计数的，所以会被闭包引用，即便把函数置 `null` 也不会减少引用次数。所以要在不用时吧 dom 变量清空
+
+匿名立即执行函数模拟块级作用域
