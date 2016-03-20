@@ -48,9 +48,9 @@
 
 `+` 一元操作符与 `Number()` 等效
 
-`parseInt()` 专门处理字符串。空字符串是 `NaN`。会忽略掉字符串中的非数字部分及其以后。第二个参数是必须的，因为 es3 和 es5 对于八进制处理有冲突。
+`global.parseInt()` 专门处理字符串。空字符串是 `NaN`。会忽略掉字符串中的非数字部分及其以后。第二个参数是必须的，因为 es3 和 es5 对于八进制处理有冲突。
 
-`parseFloat` 只解析十进制字符串，十六进制的始终为 `0`
+`global.parseFloat()` 只解析十进制字符串，十六进制的始终为 `0`
 
 `String` 类型 `length` 单字节字符长度 调用所有类型的 `toString()` 方法将其转换成字符串
 
@@ -195,3 +195,112 @@ length 不是只读的，可以设置，新增 `undefined`,  或者删除末尾�
 
 
 #Date
+
+`var now = new Date()`
+
+`Date.parse(string)` 兼容性差 `Date.UTC(year, month -1, day, hour, minute, second)` GMT 时间 这俩都返回 ms 数
+
+`new Date(与UTC相同的至少两个参数)` 解析 GMT 时间
+
+`valueOf()` 返回 ms 数
+
+一系列 set get 方法，比如 `getFullYear()` `getMonth()` 唯一要注意的是  month 是 0 - 11 的
+
+
+
+#RegExp
+
+`/.../g` 全局。`/.../i` 忽略大小写
+
+`[ab]` a或b。 `[^ab]` 非a且非b
+
+`()` 分组。 `(?:)` 分组不捕获
+
+`{1, 2}` 重复次数。`*` 任意次。`?` 零次或一次。`+` 一次或多次。`*?` `??` `+?` 贪婪匹配，取最长
+
+`^` 以开头。`$` 以结尾
+
+`|` 或
+
+`\d` 数字，`\D` 非数字
+
+`\s` 空格，`\S` 非空格
+
+`\w` 字母和数字，`\W` 非字母和数字
+
+`.` 任意非换行回车
+
+`\1` 反向引用前面的分组
+
+这些字符串匹配需要转义 `(` `)` `[` `]` `{` `}` `\` `^` `$` `|` `?` `*` `.` `+`  
+
+在 `new RegExp(exp, flag)` 中，这些需要双重转义 `\\`
+
+es5 规定字面量与构造函数每次都返回新实例，但 ie8- 的字面量却不是
+
+`.source` 是字符串表达式
+
+`exec(string)` 捕获组的数组，但再设置了 `g` 全局时，每次返回一次匹配，游标移动。返回数组的 `index` 保存本次匹配的起始点
+
+`test(string)` 测试字符串是否匹配，返回布尔值。设置 `g` 时，每次返回一次匹配
+
+
+
+#Function
+
+函数声明提升，函数表达式赋值不提升
+
+`arguments.callee` 函数本身
+
+'length' 命名参数的数量
+
+`apply(context, array)` `call(context, arg1, arg2 ... )`
+
+
+
+#基本包装类型
+
+`new String(xxx)` 传统对象。 `String(xxx)` 仅在执行时包装对象，之后销毁
+
+
+
+#Number
+
+`toFixed(小数位数)` 返回字符串 四舍五入 ，ie8 下传入 0 不能正确四舍五入。因此取整应该用 `Math.round`。
+
+
+
+#String
+
+`charAt(index)` 获取字符，`charCodeAt()` ascii 码， ie8+ 可以是用 `[index]`
+
+`concat(string)` 拼接字符串
+
+`slice(start, end)` `substring(start, end)` `substr(start, length)`
+
+`slice` 负参数与长度相加。`substring` 负参数都转化为 `0`。`substr` 负参数第一个与长度相加，第二个转化为 `0`
+
+`indexOf(char)` `lastIndexOf(char)` `toUpperCase()` `toLowerCase()`
+
+`match(exp)` 与 `exp.exec(string)` 用法相同。`search(exp)` 返回 index
+
+`replace(exp, string)` `$n` 第 n 个捕获组  `$&` 整个匹配的子字符串
+
+`split(exp, length)` 分割字符串为数组
+
+`String.fromCharCode(code, code1, code2...)`  ascii 转化字符串
+
+
+
+#Global对象
+
+`encodeURI(string)` 不会对特殊字符编码 `:` `/` `?` `#`，对空格编码
+
+`encodeURIComponent` 对任何特殊字符编码 用于参数的 `key` 与 `value` 编码
+
+`eval(code)` 严格模式下 代码外部访问不到 `eval`  内部的变量
+
+
+
+#Math
+
