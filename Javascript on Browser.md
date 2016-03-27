@@ -194,25 +194,23 @@ DOM 事件流顺序 捕获 -> 目标 -> 冒泡 ie8- 只有冒泡
 
 `onbeforeunload` 不要用 `addEventListener` `attachEvent` 返回 string 和  赋值 `event.returnValue`
 
-`window.onhashchange` `event.newURL` `event.oldURL'  ie9+
+`window.onhashchange` `event.newURL` `event.oldURL`  ie9+
 
 移动设备 `ontouchstart` `ontouchmove` `ontouchend`
 
 ##### 事件有关的内存优化
 
-用 `innerHTML` 移除的 dom，需要手动移除 event handler
+用 `innerHTML` 移除的 `dom`，需要手动移除处理函数
 
-onunload 中手动移除 event handler
+`onunload`  中手动移除 event handler
 
 ##### 模拟事件
 
-document.createEvent('MouseEvents') // KeyboardEvent CustomEvent
+`document.createEvent('MouseEvents')`  // KeyboardEvent CustomEvent
 
-document.createEventObject (ie8-)
+`document.createEventObject` ie8-
 
-bulr focus click 到底在什么地方可以手动触发
-
-focus 只能用于元素 input
+`focus` `blur` 只能用于元素 `<input>`  `<button>` `<textarea>`
 
 
 
@@ -220,13 +218,13 @@ focus 只能用于元素 input
 
 `<form>`
 
-attribute `action` `acceptCharset` 
+attribute `name` `action` url `acceptCharset` `target` iframename
 
-`.name` `.reset()` `.submit()` `.target` url
+`reset()` `submit()`
 
 `document.forms[formNameString]` 
 
-`.elements` input 元素集合 HTMLCollection
+`elements` input 元素集合 HTMLCollection
 
 `form.elements[fieldName]`
 
@@ -234,7 +232,7 @@ attribute `action` `acceptCharset`
 
 `onsubmit` 提交表单时
 
-`.submit()` 不触发 `submit` 事件
+`submit()` 不触发 `submit` 事件
 
 #####表单元素
 
@@ -246,15 +244,15 @@ attribute `disabled` `form` `name` `readOnly` `tabIndex`  `type` `value`
 
 attribute  `autofocus` ie10+
 
-`onblur` `onchange` blur 时候触发  `onfocus`
+`onblur`，  `onchange` blur 时候触发，  `onfocus`
 
 `<input type="text">`  `.select()` 模拟触发
 
-`.onselect` 鼠标释放触发, 但是 ie8- 鼠标未触发释放
+`onselect` 鼠标释放触发, 但是 ie8- 鼠标未触发释放
 
-`.selectionStart` `.selectionEnd` ie9+
+`selectionStart` `selectionEnd` ie9+
 
-`.setSelectionRange(number start, number end)` ie9+
+`setSelectionRange(number start, number end)` ie9+
 
 ######ie8-
 
@@ -284,19 +282,19 @@ html5 校验 attribute `maxLength` `minLength` `max` `min` `pattern`
 
 `<input>` attribute `formnovalidate`
 
-`<select>` `.value` `.selectedIndex` `.options`  HTMLCollection
+`<select>` `value` `selectedIndex` ，`options`  HTMLCollection
 
-`<option>` `.value` `.text` `index` `selected`
+`<option>` `value` `text` `index` `selected`
 
 
 
 ## 富文本编辑
 
-contenteditable(attr) or iframe desigMode
+元素使用 attr `contenteditable` 或者 `<iframe>` 设置 `frame.designMode = 'on'`
 
-execCommand 点击两次是 toggle 
+文本操作命令 `document.execCommand`，第二个参数始终是 `false`。多次调用是 toggle 效果
 
-常用 bold copy fontsize forecolor backcolor
+常用 `bold` `copy` `fontsize` `forecolor` `backcolor` 
 
 ####细化操作 ie9+
 
@@ -312,17 +310,17 @@ execCommand 点击两次是 toggle
 
 ## HTML5 脚本编程
 
-XDM postMessage onmessagee
+XDM `postMessage` `frameWindow.onmessage`
 
-evet 参数 data source origin
+`event` 参数 `data` `source` `origin`x
 
-dragstart drag(持续) dragend
+`dragstart` `drag`(持续) `dragend`
 
-dragenter dragover(持续) drageleave 
+`dragenter` `dragover`(持续) `drageleave` 
 
-history pushState(stateObj, '', url) popState replaceState
+`window.history`  `pushState(stateObj, '', url)` `replaceState()` url 是网站相对路径。
 
-onpopstate event.state === stateObj
+`onpopstate`  `event.state` 是 `pushState` 中的 `stateObj`
 
 
 
@@ -344,89 +342,217 @@ onpopstate event.state === stateObj
 
     }
 
-错误类型 Error EvalError RangeError ReferenceError SyntaxError TypeError URIError
+错误类型 `Error` `EvalError` `RangeError` `ReferenceError` `SyntaxError` `TypeError` `URIError`
 
-window onerror 参数 message url line
+`window.onerror` 参数 `message` `url` `line`
 
 需要关注的三种错误 类型转换错误 数据类型错误 通信错误
 
-console log error info warn
-
-
-
-## 其他心得
-
-单例对象可以挂在 构造函数上 XXX.instance
-
-单例对象也可以挂在工厂函数上 XXXfunc.instance
+`console` 的方法有 `log` `error` `info` `warn`
 
 
 
 ## Ajax
 
-XMLHttpRequest
+######基础
 
-readyState 3 loading 4 完成
+`new XMLHttpRequest()`
 
-xhr.responseText 保存完成的返回结果
+`xhr.open(method, action, aync)` `xhr.send(data)`
 
-事件 load(ie 是否支持) progess error(network error) abort
+`xhr.onreadystatechange` `xhr.onerror` `xhr.onabort`
 
-setRequestHeader getResponseHeader getAllResponseHeaders
+`xhr.readyState`  3: 接收中 4: 完成
 
-POST 提交表单
+`xhr.status` HTTP 状态码 `(status >= 200 && status < 300) || status === 304`
 
-Content-Type application/x-www-from-urlencoded
+`setRequestHeader(key, value)` `getResponseHeader(key)` `getAllResponseHeaders()`
+
+######POST 提交表单
+
+需要设置头 `Content-Type: application/x-www-from-urlencoded`
 
 表单数据是 name=value & 分割
 
-HTML5 api
+######HTML5 api
 
-FormData timeout overrideMimeType
+#######利用`FormData`进行表单提交
 
-load 事件
+    var data = new FromData();
 
-xhr.upload.onprogress xhr.download.onprogress 事件 event.loaded total ie10+
+    data.append(key, value);
 
-跨域 ajax , Access-Control-Allow-Origin * or domain
+    var fromData = new FromData(document.forms[0]);
 
-ie 实现跨域，XDR 对象 XDomainRequest，不发 cookie 只支持 get post, 只能设置 Content-Type 头，不能访问 res 的 header 信息
+`xhr.timeout = xxxms` `xhr.ontimeout` ie8+ 即可
 
-EventSource 非 ie , event open message error , 数据在 event.data 中， Content-Type 是 text/event-stream
+######进度事件
+
+`xhr.onload` 接收到完整响应，可以替代 `xhr.onreadystatechange`  ie10+
+
+#######`xhr.onprogress` 上传
+
+    xhr.onprogress = function (event) {
+
+        if (event.lengthComputable) {
+
+            // event.position
+
+            // event.totalSize
+
+        }
+
+    }
+
+######跨域 Ajax
+
+`XMLHttpRequest` 服务器响应头加上 `Access-Control-Allow-Origin: domain` , 不发送 cookie，不能设置 header,  不能访问返回的 header 信息
+
+能否使用 `XHR` 跨域要判断 `'withCredentials' in xhr`
+
+ie 实现跨域，XDR 对象 `XDomainRequest`，不发 cookie 只支持 `GET` `POST`, 只能设置 `Content-Type` 头，不能访问返回的 header 信息
+
+因为 `XHR` 和 `XDR` 都支持 `onload` ，所以直接挂 `request.onload` 即可
+
+######`XDomainRequest`
+
+    var xdr = new XDomainRequest();
+
+    xdr.onload = function () {
+
+        // xdr.responseText;
+
+    };
+
+    xdr.open(method, action);
+
+    xdr.send(data);
+
+**`Preflight` 是什么**
+
+其他跨域 `GET` 的方法还有，ping Image，JSONP
+
+######Comet
+
+#######利用 `XHR` 接受 HTTP 流
+
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 3) {
+
+         // xhr.responseText.length 纪录获取长度
+
+        progress(xhr.responseText.subtring(xxx))
+
+        }
+
+        else if (xhr.readyState === 4) {
+
+            complete(xhr.responseText);
+
+        }
+
+    }
 
 ##web sockets
 
-ws:// wss:// header Connection: upgrade
+`ws://` `wss://`
+
+`Connection: upgrade`
 
 `var socket = new WebScoket(url);`
 
 `socket.close();`
 
-readyState 0 OPENING 1 OPEN 2 CLOSING 3 CLOSE (不需要关注)
+`onopen` 连接成功
 
-event onopen onerror onmessage(evenr.data) onclose
+`onerror` 连接失败 
 
-##cookie 20-50个 4096
+`onmessage` 接受消息 `event.data`
 
-`document.cookie` 设置它并不会覆盖，除非已经有了字段
-
-设置其他参数 `domain=.xxx.com; expires=time.toGMTString(); `
-
-domain path expire secure
-
-#web 存储 2.5M 限制
-
-Storage clear getItem(name) key(index) removeItem(name) setItem(name, value)
-
-sessionStorage  会话数据，浏览器关闭消失
-
-localStorage
-
-document storage 事件 event: domain key newValue oldValue
+`onclose` 连接关闭 `event.wasClean` `event.code` 服务器返回的状态码 `event.reason`
 
 
 
-#file api 需要看
+#离线存储
+
+######cookie
+
+cookie 20-50个 4096B 大小限制
+
+key 不分大小写， key 和 value 需要 URL 编码 `encodeURIComponent`，
+
+`domain` 可以不设置子域以让其他子域访问
+
+`expires` 失效时间 `GMT` 格式时间 `time.toGMTString()`
+
+`path` 绝对路径
+
+通过设置 `document.cookie`  格式用 `;` 隔开，虽是赋值，实则是追加
+
+`document.cookie = 'key=value;domain=.xxx.com;expires=time.toGMTString();path=xxx;secure'` 
+
+######Web 存储 2.5M 限制
+
+Storage 
+
+`clear()` `getItem(name)` `key(index)` `removeItem(name)` `setItem(name, value)`
+
+`sessionStorage`  会话数据，浏览器关闭消失
+
+`localStorage`
+
+
+
+#file api
+
+`<input type="file" />` 元素有 `files` 属性 `FileList` 类型 `length`
+
+`File` 类型有以下属性 `name`，`size` 字节， `type` MIME
+
+`file.slice(start, end) // webkitSlice` 
+
+#######`FileReader`
+
+    var reader = new FileReader();
+
+    reader.readAsDataURL(file); // readAsText
+
+    reader.onload = function () {
+
+        // reader.result; 
+
+    }    
+
+    reader.onerror
+
+    reader.onprogress = function (event) {
+
+        // event.loaded
+
+    }
+
+`createObjectURL(file)` 添加给 `Image` 的 `src`
+
+######利用 `XHR` 上传文件
+
+    var formData = new FormData();
+
+    fromData.append(filename, file);
+
+    xhr.send(formData);
+
+######利用 `<iframe>` 上传文件
+
+    <form action="localhost:8080" method="POST" enctype="multipart/form-data" target="frame1">
+
+        <input type="file" name="attach" />
+
+        <input type="submit" value="submit" />
+
+    </form>
+
+    <iframe name="frame1" style="display:none"></iframe>
 
 
 
