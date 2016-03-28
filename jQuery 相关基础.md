@@ -96,7 +96,7 @@
 
 `replaceWith()` , `replaceAll()` 替换自身
 
-`clone()` -> 'cloneNode()'
+`clone()` -> `cloneNode()`
 
 `wrap()` 包装自身
 
